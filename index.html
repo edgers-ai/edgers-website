@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edgers.ai — Bientôt disponible</title>
+<meta name="description" content="Edgers.ai — Conseil, formation et certification en intelligence artificielle. Site en construction.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#050608;
+    --ivory:#F4F4EF;
+    --muted:#9DA3AE;
+    --muted-2:#6E747C;
+    --line:rgba(255,255,255,0.12);
+    --silver:#CBD4E2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  h1,h2,.display{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.05;letter-spacing:-0.02em}
+  a{color:inherit;text-decoration:none}
+
+  canvas{position:fixed;inset:0;z-index:0;display:block}
+  .vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(120% 80% at 50% 40%, transparent 50%, rgba(0,0,0,0.7) 100%);}
+
+  .content{position:relative;z-index:2;text-align:center;padding:0 24px;max-width:680px}
+  .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;letter-spacing:-0.02em;
+    margin-bottom:60px;opacity:0.92}
+  .logo b{color:#fff}
+
+  .eyebrow{display:inline-block;font-family:'Space Grotesk',sans-serif;text-transform:uppercase;
+    letter-spacing:0.26em;font-size:11px;color:var(--silver);font-weight:500;
+    border:1px solid var(--line);border-radius:20px;padding:6px 14px;margin-bottom:28px}
+  h1{font-size:clamp(40px,6.2vw,72px)}
+  h1 .accent{display:inline-block;background:linear-gradient(180deg,#fff 0%,#a8b4c6 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{color:var(--muted);font-size:18px;margin:24px auto 0;max-width:520px}
+
+  .pillars{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:36px}
+  .pill{font-family:'Space Grotesk',sans-serif;font-size:12.5px;letter-spacing:0.02em;color:var(--silver);
+    border:1px solid var(--line);border-radius:20px;padding:7px 16px}
+
+  .contact{margin-top:50px;padding-top:30px;border-top:1px solid var(--line);
+    color:var(--muted-2);font-size:14px}
+  .contact a{font-family:'Space Grotesk',sans-serif;color:#fff;margin-left:6px;
+    border-bottom:1px solid rgba(255,255,255,0.3);padding-bottom:2px;transition:.2s}
+  .contact a:hover{border-color:#fff}
+
+  .foot{position:fixed;bottom:20px;left:0;right:0;text-align:center;z-index:2;
+    color:var(--muted-2);font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;font-family:'Space Grotesk',sans-serif}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+<div class="vignette"></div>
+
+<div class="content">
+  <div class="logo">edgers<b>.ai</b></div>
+
+  <span class="eyebrow">Site en construction</span>
+
+  <h1>L'IA qui crée<br><span class="accent">l'avantage</span>.</h1>
+
+  <p class="lead">Edgers.ai accompagne les grandes organisations sur le conseil, la formation et la certification en intelligence artificielle. Le site complet sera disponible prochainement.</p>
+
+  <div class="pillars">
+    <span class="pill">Conseil</span>
+    <span class="pill">Formation</span>
+    <span class="pill">Certification</span>
+  </div>
+
+  <div class="contact">
+    Une question, un projet ?
+    <a href="mailto:contact@edgers.ai">contact@edgers.ai</a>
+  </div>
+</div>
+
+<div class="foot">© 2026 Edgers.ai</div>
+
+<script>
+/* Single metallic chrome ball pulsing as a beacon — minimal, on-brand */
+(function(){
+  const canvas = document.getElementById('bg');
+  const ctx = canvas.getContext('2d');
+  let DPR = Math.min(window.devicePixelRatio || 1, 2);
+  let W = 0, H = 0;
+  let sprite = null;
+
+  function buildSprite(){
+    const s = 192;
+    sprite = document.createElement('canvas');
+    sprite.width = s; sprite.height = s;
+    const c = sprite.getContext('2d');
+    const cx = s*0.5, cy = s*0.5, r = s*0.46;
+
+    c.save();
+    c.beginPath(); c.arc(cx, cy, r, 0, Math.PI*2); c.clip();
+
+    // environment reflection
+    const env = c.createLinearGradient(0, cy - r, 0, cy + r);
+    env.addColorStop(0.00, '#3a4250');
+    env.addColorStop(0.22, '#6b7686');
+    env.addColorStop(0.42, '#dfe6f0');
+    env.addColorStop(0.50, '#ffffff');
+    env.addColorStop(0.58, '#cdd6e2');
+    env.addColorStop(0.74, '#646f7d');
+    env.addColorStop(0.90, '#8b95a3');
+    env.addColorStop(1.00, '#a6afbc');
+    c.fillStyle = env;
+    c.fillRect(cx - r, cy - r, r*2, r*2);
+
+    // sweep
+    c.globalCompositeOperation = 'multiply';
+    const sweep = c.createRadialGradient(cx - r*0.2, cy - r*0.1, r*0.1, cx, cy, r*1.15);
+    sweep.addColorStop(0.0, 'rgba(255,255,255,1)');
+    sweep.addColorStop(0.55, 'rgba(210,218,230,1)');
+    sweep.addColorStop(1.0, 'rgba(120,130,145,1)');
+    c.fillStyle = sweep;
+    c.fillRect(cx - r, cy - r, r*2, r*2);
+    c.globalCompositeOperation = 'source-over';
+
+    // volume
+    const vol = c.createRadialGradient(cx, cy, r*0.12, cx, cy, r);
+    vol.addColorStop(0.0, 'rgba(0,0,0,0)');
+    vol.addColorStop(0.78, 'rgba(0,0,0,0)');
+    vol.addColorStop(1.0, 'rgba(0,0,0,0.40)');
+    c.fillStyle = vol;
+    c.fillRect(cx - r, cy - r, r*2, r*2);
+
+    // rim light
+    const rim = c.createRadialGradient(cx, cy + r*0.20, r*0.72, cx, cy + r*0.04, r);
+    rim.addColorStop(0.0, 'rgba(214,228,248,0)');
+    rim.addColorStop(0.85, 'rgba(214,228,248,0)');
+    rim.addColorStop(1.0, 'rgba(230,240,252,0.6)');
+    c.fillStyle = rim;
+    c.fillRect(cx - r, cy - r, r*2, r*2);
+
+    // specular highlight
+    c.globalCompositeOperation = 'lighter';
+    const hl = c.createRadialGradient(cx - r*0.34, cy - r*0.40, 0, cx - r*0.34, cy - r*0.40, r*0.5);
+    hl.addColorStop(0.0, 'rgba(255,255,255,0.98)');
+    hl.addColorStop(0.30, 'rgba(255,255,255,0.5)');
+    hl.addColorStop(1.0, 'rgba(255,255,255,0)');
+    c.fillStyle = hl;
+    c.fillRect(cx - r, cy - r, r*2, r*2);
+    c.fillStyle = 'rgba(255,255,255,0.98)';
+    c.beginPath(); c.arc(cx - r*0.33, cy - r*0.42, r*0.085, 0, Math.PI*2); c.fill();
+    c.globalCompositeOperation = 'source-over';
+
+    c.restore();
+
+    c.lineWidth = s*0.012; c.strokeStyle = 'rgba(6,8,12,0.92)';
+    c.beginPath(); c.arc(cx, cy, r - c.lineWidth*0.5, 0, Math.PI*2); c.stroke();
+  }
+
+  function resize(){
+    W = window.innerWidth; H = window.innerHeight;
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = W*DPR; canvas.height = H*DPR;
+    canvas.style.width = W+'px'; canvas.style.height = H+'px';
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    buildSprite();
+  }
+
+  // Constellation of small balls drifting slowly + one bigger one breathing at center
+  const balls = [];
+  function init(){
+    balls.length = 0;
+    const N = 60;
+    for(let i=0;i<N;i++){
+      balls.push({
+        x: Math.random()*W,
+        y: Math.random()*H,
+        vx: (Math.random()-0.5)*0.18,
+        vy: (Math.random()-0.5)*0.18,
+        size: 4 + Math.random()*4,
+        phase: Math.random()*Math.PI*2
+      });
+    }
+  }
+
+  let time = 0;
+  function frame(ms){
+    time = ms*0.001;
+    ctx.fillStyle = '#050608';
+    ctx.fillRect(0,0,W,H);
+
+    // drifting small balls
+    for(const b of balls){
+      b.x += b.vx; b.y += b.vy;
+      if(b.x < -20) b.x = W+20;
+      if(b.x > W+20) b.x = -20;
+      if(b.y < -20) b.y = H+20;
+      if(b.y > H+20) b.y = -20;
+      const pulse = 0.55 + 0.45 * (0.5 + 0.5*Math.sin(time*1.2 + b.phase));
+      ctx.globalAlpha = pulse;
+      ctx.drawImage(sprite, b.x - b.size/2, b.y - b.size/2, b.size, b.size);
+    }
+
+    // central breathing ball
+    const cb = 36 + Math.sin(time*1.0) * 4;
+    ctx.globalAlpha = 1;
+    ctx.drawImage(sprite, W/2 - cb/2, H/2 - cb/2 - 110, cb, cb);
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', () => { resize(); init(); });
+  resize();
+  init();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
