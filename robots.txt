@@ -1,0 +1,8 @@
+# robots.txt for www.edgers.ai
+# Full access — all search engines welcome
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.edgers.ai/sitemap.xml
